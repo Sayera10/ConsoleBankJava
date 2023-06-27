@@ -724,7 +724,6 @@ public class ConsoleBank {
 				
 			case 0:
 				cerrar();
-
 				break;
 
 			default:
