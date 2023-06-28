@@ -7,19 +7,20 @@ import java.util.Scanner;
 import app_banco.modelos.Cliente;
 import app_banco.modelos.Gestor;
 import app_banco.modelos.Mensaje;
+import app_banco.modelos.Transferencia;
 import util.Utiles;
 
 public class ConsoleBank {
-	private static final String ClienteResultado = null;
+
 	private List<Cliente> clientes;
 	private List<Gestor> gestores;
-	private List<Mensaje>mensajes;
-	
+	private List<Mensaje> mensajes;
+	private List<Transferencia> transferencias;
 
 	private Integer siguienteIdGestor;
 	private Integer siguienteIdCliente;
 	private Integer siguienteIdMensaje;
-	
+	private Integer siguienteIdTransferencia;
 
 	private Scanner teclado;
 
@@ -27,9 +28,14 @@ public class ConsoleBank {
 
 		this.gestores = new ArrayList<>();
 		this.clientes = new ArrayList<>();
-		this.mensajes= new ArrayList<>();
-		
+		this.mensajes = new ArrayList<>();
+		this.transferencias = new ArrayList<>();
+
 		this.siguienteIdGestor = 1;
+		this.siguienteIdCliente= 1;
+		this.siguienteIdMensaje= 1;
+		this.siguienteIdTransferencia= 1;
+		
 
 		this.teclado = new Scanner(System.in);
 
@@ -56,18 +62,21 @@ public class ConsoleBank {
 		System.out.println("9. Ver todos los clientes");
 
 		System.out.println("10. Actualizar Cliente");
-		
+
 		System.out.println("11. Eliminar cliente");
-		
+
 		System.out.print("12. Consultar Mensaje");
-		
+
 		System.out.println("13. Ver todos los mensajes");
-		
+
 		System.out.print("14. Insertar mensaje");
-		
-		
-		System.out.println("17. Eliminar cliente");
-		
+
+		System.out.println("15.consultar tranferencia");
+
+		System.out.println("16. Ver todas las transferencias");
+
+		System.out.print("17. Insertar transferencia");
+
 		System.out.print("18. Iniciar seccion como gestor");
 
 		System.out.println("0. Salir\n");
@@ -350,16 +359,12 @@ public class ConsoleBank {
 
 		System.out.print("saldo");
 
-		String saldo = teclado.next();
+		Double saldo = teclado.nextDouble();
 
-		System.out.println("Oficina: ");
-
-		String oficina = teclado.next();
-
-		Cliente nuevoCliente = new Cliente();
+		Cliente nuevoCliente = new Cliente(siguienteIdCliente, nombre, password, email, saldo, 1);
 
 		clientes.add(nuevoCliente);
-		Cliente newCliente = new Cliente();
+
 
 		siguienteIdCliente++;
 
@@ -375,9 +380,9 @@ public class ConsoleBank {
 
 		Cliente clienteResultado = buscarClientePorId(idCliente);
 
-		if (ClienteResultado != null) {
+		if (clienteResultado != null) {
 
-			System.out.println(ClienteResultado);
+			System.out.println(clienteResultado);
 
 		} else {
 
@@ -441,7 +446,6 @@ public class ConsoleBank {
 				System.out.println("Email: ");
 
 				String email = teclado.next();
-				
 
 				clienteResulatado.setCorreo(email);
 
@@ -492,7 +496,7 @@ public class ConsoleBank {
 		}
 
 	}
-	
+
 	private void eliminarCliente() {
 		System.out.println("Id del cliente a eliminar: ");
 
@@ -531,23 +535,24 @@ public class ConsoleBank {
 		}
 
 	}
-	
+
 	private void login() {
 		System.out.print("Id gestor: ");
-		int idGestor =teclado.nextInt();
+		int idGestor = teclado.nextInt();
 		System.out.print("Contraseña: ");
 		String pass = teclado.next();
 		Gestor gestor = buscarGestorPorId(idGestor);
-		if(gestor!=null) {
-			if(gestor.getPassword().equals(pass)) {
+		if (gestor != null) {
+			if (gestor.getPassword().equals(pass)) {
 				System.out.println("Login correcto");
-			}else {
+			} else {
 				System.out.println("Login incorrecto!");
 			}
-			
-			}else {	System.out.println("El usuario no existe....");
+
+		} else {
+			System.out.println("El usuario no existe....");
 		}
-		
+
 	}
 
 	private void consultarMensaje() {
@@ -556,11 +561,11 @@ public class ConsoleBank {
 
 		int idMensaje = teclado.nextInt();
 
-		Mensaje MensajeResultado = buscarMensajePorId(idMensaje);
+		Mensaje mensajeResultado = buscarMensajePorId(idMensaje);
 
-		if (MensajeResultado != null) {
+		if (mensajeResultado != null) {
 
-			System.out.println(MensajeResultado);
+			System.out.println(mensajeResultado);
 
 		} else {
 
@@ -569,6 +574,7 @@ public class ConsoleBank {
 		}
 
 	}
+
 	private void verTodosLosMensaje() {
 
 		if (mensajes.isEmpty()) {
@@ -584,37 +590,44 @@ public class ConsoleBank {
 
 	}
 
-
 	private Mensaje buscarMensajePorId(int idMensaje) {
-		// TODO Auto-generated method stub
+		Mensaje mensajeResultado = null;
+
+		for (int i = 0; i < mensajes.size(); i++) {
+
+			Mensaje mensaje = mensajes.get(i);
+
+			if (mensaje.getId() == idMensaje) {
+
+				mensajeResultado = mensaje;
+
+				return mensajeResultado;
+
+			}
+
+		}
+
 		return null;
 	}
+
 	private void insertarMensaje() {
 
-		System.out.println("Nombre: ");
+		System.out.println("mensaje: ");
 
-		String nombre = teclado.next();
-
-		System.out.println("Correo: ");
-
-		String email = teclado.next();
-
-		System.out.println("Contraseña: ");
-
-		String password = teclado.next();
+		String mensaje = teclado.next();
 
 		System.out.print("idOrigin");
 
-		String idOrigin = teclado.next();
+		Integer idOrigin = teclado.nextInt();
 
 		System.out.println("idDestino ");
 
-		String idDestino = teclado.next();
+		Integer idDestino = teclado.nextInt();
 
-		Mensaje nuevoMensaje = new Mensaje();
+		Mensaje nuevoMensaje = new Mensaje(siguienteIdMensaje, idOrigin, idDestino, mensaje);
 
 		mensajes.add(nuevoMensaje);
-		Mensaje newMensaje = new Mensaje();
+
 
 		siguienteIdMensaje++;
 
@@ -622,6 +635,87 @@ public class ConsoleBank {
 
 	}
 
+	private void consultarTransferencia() {
+
+		System.out.println("Id del transferencia a consultar: ");
+
+		int idTransferencia = teclado.nextInt();
+
+		Transferencia transferenciaResultado = buscarTransferenciaPorId(idTransferencia);
+
+		if (transferenciaResultado != null) {
+
+			System.out.println(transferenciaResultado);
+
+		} else {
+
+			System.out.println("No se puedo encontrar el transferencia" + idTransferencia);
+
+		}
+	}
+
+	private Transferencia buscarTransferenciaPorId(int idTransferencia) {
+		Transferencia transferenciaResultado = null;
+
+		for (int i = 0; i < transferencias.size(); i++) {
+
+			Transferencia transferencia = transferencias.get(i);
+
+			if (transferencia.getId() == idTransferencia) {
+
+				transferenciaResultado = transferencia;
+
+				return transferenciaResultado;
+
+			}
+
+		}
+
+		return null;
+	}
+
+	private void verTodosLosTransferencia() {
+
+		if (transferencias.isEmpty()) {
+
+			System.out.println("Todavia no hay transferencias.");
+
+		}
+
+		transferencias.forEach(transferencia -> {
+
+			System.out.println(transferencia);
+
+		});
+
+	}
+	
+
+	private void insertarTransferencia() {
+
+		System.out.println("concepto: ");
+
+		String concepto = teclado.nextLine();
+
+		System.out.println("importe: ");
+
+		Double importe = teclado.nextDouble();
+		System.out.print("idOrigin");
+		Integer idOrdenante = teclado.nextInt();
+
+		System.out.println("idBeneficiario: ");
+		Integer idBeneficiario = teclado.nextInt();
+
+		Transferencia nuevoTransferencia = new Transferencia(siguienteIdTransferencia, idOrdenante, idBeneficiario,importe , concepto );
+
+		transferencias.add(nuevoTransferencia);
+
+
+		siguienteIdTransferencia++;
+
+		System.out.println("¡transferencia creado con exito!");
+
+	}
 
 	private void cerrar() {
 		teclado.close();
@@ -631,13 +725,10 @@ public class ConsoleBank {
 
 	private void iniciar() {
 
-		List<Gestor> gestores = new ArrayList<>();
-		List<Cliente> clientes = new ArrayList<>();
-		List<Mensaje> mensajes = new ArrayList<>();
 
-		Integer siguienteIdGestor = 1;
-		Integer siguienteIdCliente = 1;
-		Integer siguienteIdMensaje = 1;
+
+
+		
 
 		Scanner teclado = new Scanner(System.in);
 
@@ -707,26 +798,42 @@ public class ConsoleBank {
 				actualizarCliente();
 				break;
 			case 11:
-				
+              eliminarCliente();
+              break;
 			case 12:
 				consultarMensaje();
 				break;
-				
+
 			case 13:
 				verTodosLosMensaje();
 				break;
 			case 14:
 				insertarMensaje();
 				break;
+
+			case 15:
+				consultarTransferencia();
+				break;
+				
+			case 16:
+				verTodosLosTransferencia();
+				break;
+				
+			case 17:
+				insertarTransferencia();
+				break;
+				
+				
 			case 18:
 				login();
 				break;
-				
+
 			case 0:
 				cerrar();
 				break;
 
 			default:
+				
 
 				System.out.println("Opcion desconocida...");
 
@@ -743,5 +850,6 @@ public class ConsoleBank {
 		consola.iniciar();
 
 	}
+	
 
 }

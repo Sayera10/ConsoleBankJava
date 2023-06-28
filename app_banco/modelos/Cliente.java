@@ -1,36 +1,41 @@
 package app_banco.modelos;
 
 public class Cliente extends Usuarios {
-	private String oficina;
+	private double saldo;
+	private Integer idGestor;
+
 	public Cliente() {
-		
+
 		super();
 	}
 
-	public Cliente(Integer id, String usuario, String password, String correo, double saldo) {
+	public Cliente(Integer id, String usuario, String password, String correo, double saldo, Integer idGestor) {
 		super(id, usuario, password, correo);
-		this.oficina = oficina;
+		this.saldo = saldo;
+		this.idGestor = idGestor;
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getOficina() {
-		return oficina;
+	public double getSaldo() {
+		return saldo;
 	}
 
-	public void setOficina(String oficina) {
-		this.oficina = oficina;
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 
-public String toString() {
-		
-		return "Cliente{id: " +this.id +  ", usuario: " + this.usuario + " , oficina:" +this.oficina +  " }";
-		
-		
+	public Integer getIdGestor() {
+		return idGestor;
 	}
 
+	public void setIdGestor(Integer idGestor) {
+		this.idGestor = idGestor;
+	}
 
+	public String toString() {
 
+		return "Cliente{id: " + this.id + ", usuario: " + this.usuario + " , saldo:" + this.saldo + " }";
 
+	}
 
 }
-

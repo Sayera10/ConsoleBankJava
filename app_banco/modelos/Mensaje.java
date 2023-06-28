@@ -14,13 +14,14 @@ public class Mensaje {
 	}
 	
 
-	public Mensaje(Integer id, Integer idOrigin, Integer idDestino, String texto, Date fecha) {
+	public Mensaje(Integer id, Integer idOrigin, Integer idDestino, String texto) {
 		this.id = id;
 		this.idOrigin = idOrigin;
 		this.idDestino= idDestino;
 		this.texto=texto;
 		this.fecha=new Date();
 }
+	
 	
 
 	

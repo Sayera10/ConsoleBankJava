@@ -1,6 +1,7 @@
 package Banco.prueba;
 
 import app_banco.copia.Cliente;
+import app_banco.modelos.Mensaje;
 
 public class PruebaMensaje {
 
@@ -9,14 +10,9 @@ public class PruebaMensaje {
 	}
 
 	public static void main(String[] args) {
-		Cliente client = new Cliente(2, 23, "Saira", "12335" , "saira@correo.com", 100); 
-		Cliente clientB = new Cliente(12, 18, "wafa" , "632618", "wafa@correo.com", 100 ); 
-		Cliente clientC = new Cliente();
-		clientC.setId(2);
+		Mensaje mensaje = new Mensaje(); 
+		System.out.println(mensaje);
 		
-		clientC.setPassword("123454");
-		clientC.setCorreo("ana@gmail.com");
-		clientC.setSaldo(0);
 	}
 
 }
